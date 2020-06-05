@@ -7,12 +7,12 @@
  * Time: 18:46
  */
 
-namespace LazyBench\Tax\Hc;
+namespace LazyBench\TaxMultiProxy\Hc;
 
-use LazyBench\Tax\Hc\Entity\EntityInterface;
-use LazyBench\Tax\Hc\Util\Config;
-use LazyBench\Tax\Hc\Util\Curl;
-use LazyBench\Tax\Hc\Util\Sign;
+use LazyBench\TaxMultiProxy\Hc\Entity\EntityInterface;
+use LazyBench\TaxMultiProxy\Hc\Util\Config;
+use LazyBench\TaxMultiProxy\Hc\Util\Curl;
+use LazyBench\TaxMultiProxy\Hc\Util\Sign;
 
 class Hc
 {

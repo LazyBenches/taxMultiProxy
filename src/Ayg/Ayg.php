@@ -7,9 +7,9 @@
  * Time: 17:04
  */
 
-namespace LazyBench\Tax\Ayg;
+namespace LazyBench\TaxMultiProxy\Ayg;
 
-use LazyBench\Tax\Ayg\Http\Client;
+use LazyBench\TaxMultiProxy\Ayg\Http\Client;
 
 class Ayg
 {

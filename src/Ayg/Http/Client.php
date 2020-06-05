@@ -1,6 +1,6 @@
 <?php
 
-namespace LazyBench\Tax\Ayg\Http;
+namespace LazyBench\TaxMultiProxy\Ayg\Http;
 
 
 class Client

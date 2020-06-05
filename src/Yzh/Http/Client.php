@@ -1,22 +1,18 @@
 <?php
 
-namespace LazyBench\Tax\Yzh\Http;
+namespace LazyBench\TaxMultiProxy\Yzh\Http;
 
 class Client
 {
 
     private $host;
     private $dealerId;
-    private $appKey;
-    private $des3Key;
     private $timeout = 30;
 
-    public function __construct($host, $dealerId, $appKey, $des3Key)
+    public function __construct($host, $dealerId)
     {
         $this->host = $host;
         $this->dealerId = $dealerId;
-        $this->appKey = $appKey;
-        $this->des3Key = $des3Key;
     }
 
     public function request($requestId, $url, $params = [], $method = 'GET')
@@ -27,18 +23,17 @@ class Client
         );
         // 处理URL
         $url = "{$this->host}{$url}";
-        if ($method == 'GET') {
+        if ($method === 'GET') {
             return $this->get($url, $params, $header);
-        } else {
-            return $this->post($url, $params, $header);
         }
+        return $this->post($url, $params, $header);
     }
 
     private function get($url, $params, $header)
     {
         if ($params) {
             $query = http_build_query($params);
-            $url .= strpos('?', $url) ? "&" : "?" . $query;
+            $url .= strpos('?', $url) ? '&' : '?'.$query;
         }
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);

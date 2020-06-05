@@ -7,7 +7,7 @@
  * Time: 16:57
  */
 
-namespace LazyBench\Tax\Hc\Util;
+namespace LazyBench\TaxMultiProxy\Hc\Util;
 
 class Curl
 {

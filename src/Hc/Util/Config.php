@@ -7,7 +7,7 @@
  * Time: 17:10
  */
 
-namespace LazyBench\Tax\Hc\Util;
+namespace LazyBench\TaxMultiProxy\Hc\Util;
 
 class Config
 {

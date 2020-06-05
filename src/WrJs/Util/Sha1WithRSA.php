@@ -4,12 +4,12 @@
  * Date：2019/12/5 13:49
  * Desc：Sha1WithRsa.php
  */
-namespace LazyBench\Tax\WrJs\Util;
+namespace LazyBench\TaxMultiProxy\WrJs\Util;
 
 class Sha1WithRSA
 {
-    private $pubKey = '';
-    private $priKey = '';
+    private $pubKey;
+    private $priKey;
 
     public function __construct($priKey, $pubKey)
     {

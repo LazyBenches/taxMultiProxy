@@ -7,10 +7,10 @@
  * Time: 11:31
  */
 
-namespace LazyBench\Tax\Ayg\Entity;
+namespace LazyBench\TaxMultiProxy\Ayg\Entity;
 
 
-use LazyBench\Tax\Ayg\Traits\RequestTrait;
+use LazyBench\TaxMultiProxy\Ayg\Traits\RequestTrait;
 
 class OrderPay
 {

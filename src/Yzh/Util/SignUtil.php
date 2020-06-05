@@ -6,7 +6,7 @@
  * 签名算法
  */
 
-namespace LazyBench\Tax\Yzh\Util;
+namespace LazyBench\TaxMultiProxy\Yzh\Util;
 
 
 class SignUtil

@@ -12,10 +12,10 @@
  *
  */
 
-namespace LazyBench\Tax\Hc\Entity\Employee;
+namespace LazyBench\TaxMultiProxy\Hc\Entity\Employee;
 
 
-use LazyBench\Tax\Hc\Entity\Entity;
+use LazyBench\TaxMultiProxy\Hc\Entity\Entity;
 
 class  EmployeeInfo extends Entity
 {

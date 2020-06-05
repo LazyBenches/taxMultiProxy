@@ -7,7 +7,7 @@
  * Time: 17:39
  */
 
-namespace LazyBench\Tax\Hc\Entity;
+namespace LazyBench\TaxMultiProxy\Hc\Entity;
 
 interface EntityInterface
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace LazyBench\Tax\Ayg\Traits;
+namespace LazyBench\TaxMultiProxy\Ayg\Traits;
 
 
 /**

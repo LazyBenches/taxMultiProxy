@@ -7,9 +7,9 @@
  * Time: 15:53
  */
 
-namespace LazyBench\Tax\Hc\Entity\Commission;
+namespace LazyBench\TaxMultiProxy\Hc\Entity\Commission;
 
-use LazyBench\Tax\Hc\Entity\Entity;
+use LazyBench\TaxMultiProxy\Hc\Entity\Entity;
 
 class CommissionInfo extends Entity
 {

@@ -32,9 +32,11 @@ class Yzh
     }
 
     /**
-     * 银行卡实时下单
+     * Author:LazyBench
+     *
      * @param $data
-     * @return bool|mixed|string
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function orderRealtime($data)
     {
@@ -46,8 +48,10 @@ class Yzh
     }
 
     /**
-     * 支付宝实时下单
-     * @return bool|mixed|string
+     * Author:LazyBench
+     *
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function orderAliPay()
     {
@@ -59,8 +63,10 @@ class Yzh
     }
 
     /**
-     * 微信红包实时下单
-     * @return bool|mixed|string
+     * Author:LazyBench
+     *
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function orderWxPay()
     {
@@ -72,9 +78,11 @@ class Yzh
     }
 
     /**
-     * 查询一个订单
+     * Author:LazyBench
+     *
      * @param $data
-     * @return bool|mixed|string
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function queryRealtimeOrder($data)
     {
@@ -85,8 +93,10 @@ class Yzh
     }
 
     /**
-     * 查询商户余额
-     * @return bool|mixed|string
+     * Author:LazyBench
+     *
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function queryAccounts()
     {
@@ -96,8 +106,11 @@ class Yzh
     }
 
     /**
-     * 查询电子回单
-     * @return bool|mixed|string
+     * Author:LazyBench
+     *
+     * @param $data
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function receiptFile($data)
     {
@@ -106,8 +119,10 @@ class Yzh
     }
 
     /**
-     * 取消待打款订单
-     * @return bool|mixed|string
+     * Author:LazyBench
+     *
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function orderFail()
     {
@@ -118,9 +133,11 @@ class Yzh
 
 
     /**
-     * 白名单验证
+     * Author:LazyBench
+     *
      * @param $data
-     * @return bool|mixed|string
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function userWhiteCheck($data)
     {
@@ -129,9 +146,11 @@ class Yzh
     }
 
     /**
-     * 实名认证
+     * Author:LazyBench
+     *
      * @param $data
-     * @return bool|mixed|string
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function verifyIdCard($data)
     {
@@ -140,9 +159,11 @@ class Yzh
     }
 
     /**
-     * 银行卡三要素验证
+     * Author:LazyBench
+     *
      * @param $data
-     * @return bool|mixed|string
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function verifyBankThree($data)
     {
@@ -151,9 +172,11 @@ class Yzh
     }
 
     /**
-     * 银行卡四要素验证
+     * Author:LazyBench
+     *
      * @param $data
-     * @return bool|mixed|string
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function verifyBankFour($data)
     {
@@ -162,9 +185,11 @@ class Yzh
     }
 
     /**
-     * 银行卡四要素-请求鉴权
+     * Author:LazyBench
+     *
      * @param $data
-     * @return bool|mixed|string
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function verifyBankFourRequest($data)
     {
@@ -173,9 +198,11 @@ class Yzh
     }
 
     /**
-     * 银行卡四要素-确认鉴权
+     * Author:LazyBench
+     *
      * @param $data
-     * @return bool|mixed|string
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function verifyBankFourConfirm($data)
     {
@@ -193,9 +220,11 @@ class Yzh
     }
 
     /**
-     * 查询日订单文件
+     * Author:LazyBench
+     *
      * @param $data
-     * @return bool|mixed|string
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function orderDownloadUrl($data)
     {
@@ -204,9 +233,11 @@ class Yzh
     }
 
     /**
-     * 查询日流⽔文件
+     * Author:LazyBench
+     *
      * @param $data
-     * @return bool|mixed|string
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function billDownloadUrl($data)
     {
@@ -215,8 +246,11 @@ class Yzh
     }
 
     /**
-     * 查询商户已开具发票金额和待开具发票金额
-     * @return bool|mixed|string
+     * Author:LazyBench
+     *
+     * @param $data
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function invoiceStat($data)
     {
@@ -243,19 +277,21 @@ class Yzh
     }
 
     /**
+     * Author:LazyBench
      * 云账户请求
      * @param $url
      * @param $data
      * @param string $method
-     * @return bool|mixed|string
+     * @return array|bool|mixed|string
+     * @throws \Exception
      */
     public function http($url, $data, $method = 'GET')
     {
-        $http = new Client($this->host, $this->dealerId, $this->appKey, $this->des3Key);
+        $http = new Client($this->host, $this->dealerId);
         // 创建加密数据
         $param = [
             'data' => $this->desUtil()->encrypt(json_encode($data)),
-            'mess' => mt_rand(1000, 9999),
+            'mess' => random_int(1000, 9999),
             'timestamp' => time(),
         ];
         $param['sign'] = $this->signUtil()->sign($param['data'], $param['mess'], $param['timestamp']);

@@ -5,10 +5,10 @@
  * Desc：Wrjs.php
  */
 
-namespace LazyBench\Tax\WrJs;
+namespace LazyBench\TaxMultiProxy\WrJs;
 
-use LazyBench\Tax\WrJs\Http\Client;
-use LazyBench\Tax\WrJs\Util\Sha1WithRSA;
+use LazyBench\TaxMultiProxy\WrJs\Http\Client;
+use LazyBench\TaxMultiProxy\WrJs\Util\Sha1WithRSA;
 
 class WrJs
 {

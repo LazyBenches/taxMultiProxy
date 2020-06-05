@@ -1,6 +1,6 @@
 <?php
 
-namespace LazyBench\Tax\WrJs\Http;
+namespace LazyBench\TaxMultiProxy\WrJs\Http;
 
 class Client
 {

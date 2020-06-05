@@ -7,7 +7,7 @@
  * Time: 15:27
  */
 
-namespace LazyBench\Tax\Hc\Entity;
+namespace LazyBench\TaxMultiProxy\Hc\Entity;
 
 abstract class Entity implements EntityInterface
 {

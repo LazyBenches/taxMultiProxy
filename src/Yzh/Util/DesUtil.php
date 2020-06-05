@@ -6,7 +6,7 @@
  * 3des加密数据
  */
 
-namespace LazyBench\Tax\Yzh\Util;
+namespace LazyBench\TaxMultiProxy\Yzh\Util;
 
 
 class DesUtil

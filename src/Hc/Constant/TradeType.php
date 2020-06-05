@@ -7,7 +7,7 @@
  * Time: 16:19
  */
 
-namespace LazyBench\Tax\Hc\Constant;
+namespace LazyBench\TaxMultiProxy\Hc\Constant;
 
 class TradeType
 {
