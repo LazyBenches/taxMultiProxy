@@ -30,6 +30,6 @@ class SignUtil
         $timestamp = $params['timestamp'] ?? '';
         $sign = $params['sign'] ?? '';
         $signStr = hash_hmac('sha256', "data={$data}&mess={$mess}&timestamp={$timestamp}&key={$this->appKey}", $this->appKey);
-        return $sign == $signStr ? true : false;
+        return $sign === $signStr;
     }
 }
