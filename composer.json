@@ -1,5 +1,5 @@
 {
-    "name": "lazybench/taxMultiProxy",
+    "name": "lazybench/taxmultiproxy",
     "description": "taxMultiProxy",
     "require": {
         "ext-bcmath": "*",
