@@ -1,6 +1,6 @@
 {
-    "name": "lazybench/tax",
-    "description": "tax",
+    "name": "lazybench/taxMultiProxy",
+    "description": "taxMultiProxy",
     "require": {
         "ext-bcmath": "*",
         "ext-zip": "*"
@@ -11,7 +11,7 @@
     "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "LazyBench\\Tax\\": "./src/"
+            "LazyBench\\TaxMultiProxy\\": "./src/"
         }
     }
 }
