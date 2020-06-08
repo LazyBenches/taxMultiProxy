@@ -6,7 +6,7 @@
  * 云账户
  */
 
-namespace LazyBench\Tax\Yzh;
+namespace LazyBench\TaxMultiProxy\App\Yzh;
 
 use LazyBench\TaxMultiProxy\App\Yzh\Http\Client;
 use LazyBench\TaxMultiProxy\App\Yzh\Util\DesUtil;
