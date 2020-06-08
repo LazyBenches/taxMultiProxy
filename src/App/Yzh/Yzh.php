@@ -8,9 +8,9 @@
 
 namespace LazyBench\Tax\Yzh;
 
-use LazyBench\Tax\Yzh\Http\Client;
-use LazyBench\Tax\Yzh\Util\DesUtil;
-use LazyBench\Tax\Yzh\Util\SignUtil;
+use LazyBench\TaxMultiProxy\App\Yzh\Http\Client;
+use LazyBench\TaxMultiProxy\App\Yzh\Util\DesUtil;
+use LazyBench\TaxMultiProxy\App\Yzh\Util\SignUtil;
 
 class Yzh
 {

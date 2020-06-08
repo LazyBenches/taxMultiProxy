@@ -11,7 +11,7 @@ namespace LazyBench\TaxMultiProxy\App\Yzh\Util;
 
 class SignUtil
 {
-    private $appKey = '';
+    private $appKey;
 
     public function __construct($appKey)
     {
