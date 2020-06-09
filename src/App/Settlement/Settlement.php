@@ -88,7 +88,7 @@ class Settlement
      */
     public function createServiceId(array $data)
     {
-        return $this->handleResponse('createServiceId', $data);
+        return $this->setInterface(\App\Rpc\Lib\CommonInterface::class)->handleResponse('createServiceId', $data);
     }
 
 }
