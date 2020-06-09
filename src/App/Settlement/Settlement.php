@@ -27,6 +27,18 @@ class Settlement
     /**
      * Author:LazyBench
      *
+     * @param string $interface
+     * @return $this
+     */
+    public function setInterface(string $interface): self
+    {
+        $this->rpc->setInterface($interface);
+        return $this;
+    }
+
+    /**
+     * Author:LazyBench
+     *
      * @param $method
      * @param $data
      * @return array
@@ -67,4 +79,16 @@ class Settlement
     {
         return $this->handleResponse('state', $data);
     }
+    /**
+     * Author:LazyBench
+     *
+     * @param array $data
+     * @return array
+     * @throws \Exception
+     */
+    public function createServiceId(array $data)
+    {
+        return $this->handleResponse('createServiceId', $data);
+    }
+
 }
