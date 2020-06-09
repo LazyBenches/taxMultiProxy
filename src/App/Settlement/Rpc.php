@@ -14,7 +14,7 @@ class Rpc
 {
     private $host = '';
     private $version = '1.0';
-    private $interface = 'App\Rpc\Lib\OrderInterface';
+    private $interface = \App\Rpc\Lib\OrderInterface::class;
 
     public function __construct(array $config)
     {
