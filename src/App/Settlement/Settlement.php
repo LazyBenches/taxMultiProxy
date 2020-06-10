@@ -50,8 +50,8 @@ class Settlement
         if (!$response) {
             throw new \Exception('解析失败');
         }
-        if ($response['code'] !== '0000') {
-            throw new \Exception($response['msg'].json_encode($response), $response['code']);
+        if (!isset($response['code']) || $response['code'] !== '0000') {
+            throw new \Exception($response['msg'] ?? $response['message'].json_encode($response), $response['code']??'9999');
         }
         return $response['data'] ?? [];
     }
@@ -79,6 +79,7 @@ class Settlement
     {
         return $this->handleResponse('state', $data);
     }
+
     /**
      * Author:LazyBench
      *
