@@ -50,7 +50,7 @@ class Settlement
         if (!$response) {
             throw new \Exception('解析失败');
         }
-        if (!isset($response['code']) || $response['code'] !== '0000') {
+        if (!isset($response['code'])) {
             throw new \Exception($response['msg'] ?? $response['message'], $response['code'] ?? '9999');
         }
         return $response['data'] ?? [];
