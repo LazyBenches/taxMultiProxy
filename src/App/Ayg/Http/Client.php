@@ -69,7 +69,7 @@ class Client
     {
         $params = [
             'appId' => $this->appId,
-            'nonce' => get_random_string(32),
+            'nonce' => $this->getRandom(32),
             'timestamp' => time(),
             'data' => $data,
         ];
@@ -79,6 +79,14 @@ class Client
         return $this->sendRequest('POST', $url, $params);
     }
 
+	public function getRandom($length = 4, $chars = 'abcdefghijkmnpqrstuvwxyz23456789'): string
+    {
+        $str = '';
+        for ($i = 0; $i < $length; $i++) {
+            $str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+        }
+        return $str;
+    }
     /**
      * Author:LazyBench
      *
