@@ -52,12 +52,55 @@ class Client
     public function get($path, $params)
     {
         if (is_array($params)) {
-            $params = build_query_string($params);
+            $params = $this->buildQueryString($params);
         }
         $url = $this->buildUrl($path).'?'.$params;
         return $this->sendRequest('GET', $url);
     }
 
+	
+	    /**
+     * 签名参数组装
+     *
+     * @param array $params 参数
+     * @param boolean $isSubset 是否子集
+     * @return void
+     */
+    public function buildQueryString($params, $isSubset = false)
+    {
+        $data = [];
+        ksort($params, SORT_NATURAL);
+        $isAssocArray = true;
+        $count = 0;
+        foreach ($params as $key => $value) {
+            //判断是否顺序数组
+            if ($isAssocArray) {
+                if ($count != $key) {
+                    $isAssocArray = false;
+                }
+                $count++;
+            }
+            if ($value === null) {
+                continue;
+            }
+
+            if (is_array($value)) {
+                $value = $this->buildQueryString($value, true);
+            }
+            $data[$key] = urldecode($value);
+        }
+        if ($isSubset) {
+            //子集按数组和键值对不同形式组装
+            if ($isAssocArray) {
+                return '['.implode(',', $data).']';
+            } else {
+                return '{'.http_build_query($data).'}';
+            }
+        } else {
+            return http_build_query($data);
+        }
+    }
+	
     /**
      * POST
      *
