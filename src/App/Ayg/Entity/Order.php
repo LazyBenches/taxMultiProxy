@@ -133,7 +133,11 @@ class Order
             'notifyUrl' => $this->notifyUrl,
             'list' => $this->list,
         ];
-        return $this->client->post($path, $data);
+        return [
+            'path' => $path,
+            'data' => $data,
+        ];
+        //        return $this->client->post($path, $data);
     }
 
 
@@ -180,7 +184,11 @@ class Order
             'name' => $this->name,
             'identity' => $this->identity,
         ];
-        return $this->client->post($path, $data);
+        return [
+            'path' => $path,
+            'data' => $data,
+        ];
+        //        return $this->client->post($path, $data);
     }
 
     /**
@@ -196,7 +204,11 @@ class Order
             'templateId' => $this->templateId,
             'idcard' => $this->identity,
         ];
-        return $this->client->post($path, $data);
+        return [
+            'path' => $path,
+            'data' => $data,
+        ];
+        //        return $this->client->post($path, $data);
     }
 
 }
