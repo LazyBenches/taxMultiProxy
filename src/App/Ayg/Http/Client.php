@@ -232,7 +232,7 @@ class Client
     public function rsaSign($data)
     {
         unset($data['signType']);
-        $query = build_query_string($data);
+        $query = $this->buildQueryString($data);
         $query = urldecode($query);
         $privateKey = "-----BEGIN RSA PRIVATE KEY-----\n".wordwrap($this->privateKey, 64, "\n", true)."\n-----END RSA PRIVATE KEY-----";
         openssl_sign($query, $sign, $privateKey, OPENSSL_ALGO_SHA256);
@@ -250,7 +250,7 @@ class Client
      */
     public function rsaVerify($sign, $data)
     {
-        $query = build_query_string($data);
+        $query = $this->buildQueryString($data);
         $query = urldecode($query);
         $publicKey = "-----BEGIN PUBLIC KEY-----\n".wordwrap($this->publicKey, 64, "\n", true)."\n-----END PUBLIC KEY-----";
         $verify = openssl_verify($query, base64_decode($sign), $publicKey, OPENSSL_ALGO_SHA256);
