@@ -75,6 +75,30 @@ class Settlement
      * @return array
      * @throws \Exception
      */
+    public function applyRecharge(array $data)
+    {
+        return $this->handleResponse('applyRecharge', $data);
+    }
+
+    /**
+     * Author:LazyBench
+     *
+     * @param array $data
+     * @return array
+     * @throws \Exception
+     */
+    public function queryRecharge(array $data)
+    {
+        return $this->handleResponse('queryRecharge', $data);
+    }
+
+    /**
+     * Author:LazyBench
+     *
+     * @param array $data
+     * @return array
+     * @throws \Exception
+     */
     public function state(array $data)
     {
         return $this->handleResponse('state', $data);
