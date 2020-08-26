@@ -99,6 +99,18 @@ class Settlement
      * @return array
      * @throws \Exception
      */
+    public function queryBalance(array $data)
+    {
+        return $this->handleResponse('queryBalance', $data);
+    }
+
+    /**
+     * Author:LazyBench
+     *
+     * @param array $data
+     * @return array
+     * @throws \Exception
+     */
     public function state(array $data)
     {
         return $this->handleResponse('state', $data);
