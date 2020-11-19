@@ -195,7 +195,6 @@ class Client
         } else {
             $queryString = $queryParams ? "?{$queryParams}" : '';
         }
-
         $url = $this->buildUrl($path).$queryString;
         return $this->sendRequest('POST', $url, $formData);
     }
@@ -241,7 +240,7 @@ class Client
      * @param array $data
      * @return string
      */
-    public function rsaSign($data)
+    public function rsaSign(array $data): string
     {
         unset($data['signType']);
         $query = $this->buildQueryString($data);
@@ -260,7 +259,7 @@ class Client
      * @param $data
      * @return bool
      */
-    public function rsaVerify($sign, $data)
+    public function rsaVerify($sign, $data): bool
     {
         $query = $this->buildQueryString($data);
         $query = urldecode($query);
