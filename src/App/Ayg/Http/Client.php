@@ -3,6 +3,8 @@
 namespace LazyBench\TaxMultiProxy\App\Ayg\Http;
 
 
+use LazyBench\TaxMultiProxy\Helper\Tool;
+
 class Client
 {
     private $appId;
@@ -56,7 +58,7 @@ class Client
             $params = '?'.$this->buildQueryString($params);
         }
         $url = $this->buildUrl($path).$params;
-        return $this->sendRequest('GET', $url);
+        return Tool::sendRequest('GET', $this->headers, $url);
     }
 
 
@@ -110,33 +112,16 @@ class Client
     {
         $params = [
             'appId' => $this->appId,
-            'nonce' => $this->getRandom(32),
+            'nonce' => Tool::getRandomString(32),
             'timestamp' => time(),
             'data' => $data,
         ];
         $params['sign'] = $this->rsaSign($params);
         $params = json_encode($params);
         $url = $this->buildUrl($path);
-        return $this->sendRequest('POST', $url, $params);
+        return Tool::sendRequest('POST', $url, $this->headers, $params);
     }
 
-    /**
-     * Author:LazyBench
-     *
-     * @param int $length
-     * @return string
-     * @throws \Exception
-     */
-    public function getRandom($length = 4): string
-    {
-        $str = '';
-        $chars = 'qQwWeErRtTyYuUiIoOpPaAsSfFgGhHjJkKlLzZxXcCvVbBnNmM0123456789';
-        $len = strlen($chars) - 1;
-        for ($i = 0; $i < $length; $i++) {
-            $str .= $chars[random_int(0, $len)];
-        }
-        return $str;
-    }
 
     /**
      * Author:LazyBench
@@ -154,7 +139,7 @@ class Client
             'appId' => $this->appId,
             'data' => $data,
             'method' => $method,
-            'nonce' => $this->getRandom(32),
+            'nonce' => Tool::getRandomString(32),
             'timestamp' => date('Y-m-d H:i:s', $timestamp),
             'signType' => 'RSA2',
             'version' => '1.0',
@@ -162,7 +147,7 @@ class Client
         $params['sign'] = $this->rsaSign($params);
         $params = json_encode($params);
         $url = $this->buildUrl($path);
-        return $this->sendRequest('POST', $url, $params);
+        return Tool::sendRequest('POST', $this->headers, $url, $params);
     }
 
     /**
@@ -187,7 +172,7 @@ class Client
         }
         if (is_array($queryParams)) {
             $queryParams['appId'] = $this->appId;
-            $queryParams['nonce'] = $this->getRandom(32);
+            $queryParams['nonce'] = Tool::getRandomString(32);
             $queryParams['timestamp'] = time();
             $signData = array_merge($signData, $queryParams);
             $queryParams['sign'] = $this->rsaSign($signData);
@@ -196,43 +181,9 @@ class Client
             $queryString = $queryParams ? "?{$queryParams}" : '';
         }
         $url = $this->buildUrl($path).$queryString;
-        return $this->sendRequest('POST', $url, $formData);
+        return Tool::sendRequest('POST', $this->headers, $url, $formData);
     }
 
-    /**
-     * Author:LazyBench
-     *
-     * @param $method
-     * @param $url
-     * @param array $params
-     * @return mixed
-     * @throws \Exception
-     */
-    public function sendRequest($method, $url, $params = [])
-    {
-        $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_HEADER, 0);
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $this->headers);
-        if ($method === 'POST') {
-            curl_setopt($curl, CURLOPT_POST, 1);
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
-        }
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        $res = curl_exec($curl);
-        $errorNo = curl_errno($curl);
-        $errMsg = curl_error($curl);
-        curl_close($curl);
-        if ($errorNo) {
-            throw new \Exception($errMsg, $errorNo);
-        }
-        if (!$arr = json_decode($res, true)) {
-            throw new \Exception(json_last_error_msg(), json_last_error());
-        }
-        return $arr;
-    }
 
     /**
      * Sign
