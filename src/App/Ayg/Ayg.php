@@ -22,7 +22,7 @@ class Ayg
 
     public function __construct($config)
     {
-        $this->client = new Client($config['appId'], $config['privateKey'], $config['baseUrl'], $config['publicKey']);
+        $this->client = new Client($config['appId'], $config['privateKey'], $config['host'], $config['publicKey']);
     }
 
     public function getClient()

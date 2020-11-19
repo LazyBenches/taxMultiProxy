@@ -58,8 +58,8 @@ class Client
         return $this->sendRequest('GET', $url);
     }
 
-	
-	    /**
+
+    /**
      * 签名参数组装
      *
      * @param array $params 参数
@@ -100,7 +100,7 @@ class Client
             return http_build_query($data);
         }
     }
-	
+
     /**
      * POST
      *
@@ -122,7 +122,7 @@ class Client
         return $this->sendRequest('POST', $url, $params);
     }
 
-	public function getRandom($length = 4, $chars = 'abcdefghijkmnpqrstuvwxyz23456789'): string
+    public function getRandom($length = 4, $chars = 'abcdefghijkmnpqrstuvwxyz1234567890'): string
     {
         $str = '';
         for ($i = 0; $i < $length; $i++) {
@@ -130,6 +130,7 @@ class Client
         }
         return $str;
     }
+
     /**
      * Author:LazyBench
      *
@@ -145,7 +146,7 @@ class Client
             'appId' => $this->appId,
             'data' => $data,
             'method' => $method,
-            'nonce' => get_random_string(32),
+            'nonce' => $this->getRandom(32),
             'timestamp' => date('Y-m-d H:i:s', $timestamp),
             'signType' => 'RSA2',
             'version' => '1.0',
