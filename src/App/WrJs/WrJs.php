@@ -9,6 +9,7 @@ namespace LazyBench\TaxMultiProxy\App\WrJs;
 
 use LazyBench\TaxMultiProxy\App\WrJs\Http\Client;
 use LazyBench\TaxMultiProxy\App\WrJs\Util\Sha1WithRSA;
+use LazyBench\TaxMultiProxy\Helper\Tool;
 
 class WrJs
 {
@@ -28,10 +29,11 @@ class WrJs
     }
 
     /**
+     * Author:LazyBench
      * 查询落地公司余额
-     * Author：Lzxyz
      * @param $landingCompanyId
-     * @return mixed
+     * @return array
+     * @throws \Exception
      */
     public function balance($landingCompanyId)
     {
@@ -41,9 +43,10 @@ class WrJs
     }
 
     /**
+     * Author:LazyBench
      * 落地公司
-     * Author：Lzxyz
-     * @return array|bool|mixed|string
+     * @return array
+     * @throws \Exception
      */
     public function company()
     {
@@ -52,16 +55,17 @@ class WrJs
     }
 
     /**
+     * Author:LazyBench
      * 提交单人发放数据
-     * Author：Lzxyz
      * @param $data
-     * @return array|bool|mixed|string
+     * @return array
+     * @throws \Exception
      */
     public function orderApply($data)
     {
 
         $url = '/openApi/paySalary';
-        $data['randomCode'] = get_random_string(6);
+        $data['randomCode'] = Tool::getRandomString(6);
         $data['notifyUrl'] = $this->notifyUrl;
         // 签名处理 以下参数必填
         $signParams = [
@@ -86,7 +90,8 @@ class WrJs
      * @param $orderId
      * @param $payId
      * @param $orderNo
-     * @return array|bool|mixed|string
+     * @return array
+     * @throws \Exception
      */
     public function orderQuery($orderId, $payId, $orderNo)
     {
@@ -97,6 +102,13 @@ class WrJs
         return $this->http($url, $data, 'POST');
     }
 
+    /**
+     * Author:LazyBench
+     *
+     * @param $clientOrderId
+     * @return array
+     * @throws \Exception
+     */
     public function orderQueryByClientOrderId($clientOrderId)
     {
         $url = '/openApi/queryPayDetailByClientOrderId';
@@ -105,8 +117,9 @@ class WrJs
     }
 
     /**
+     * Author:LazyBench
      * 订单回调通知验证
-     * Author：Lzxyz
+     * @return bool
      */
     public function orderCallbackVerify()
     {
@@ -114,8 +127,13 @@ class WrJs
     }
 
     /**
-     *  签约申请(一)
-     * Author：Lzxyz
+     * Author:LazyBench
+     * 签约申请(一)
+     * @param $realName
+     * @param $idCard
+     * @param $mobile
+     * @return array
+     * @throws \Exception
      */
     public function signApply($realName, $idCard, $mobile)
     {
@@ -127,8 +145,8 @@ class WrJs
     }
 
     /**
+     * Author:LazyBench
      * 签约文件上传(二)
-     * Author：Lzxyz
      * @param $data
      * @return array
      */
@@ -150,7 +168,7 @@ class WrJs
             ];
         }
         $output = json_decode($output, true);
-        if ($output && $output['Status'] == 'OK') {
+        if ($output && $output['Status'] === 'OK') {
             return [
                 'status' => 1,
                 'msg' => '',
@@ -163,10 +181,11 @@ class WrJs
     }
 
     /**
+     * Author:LazyBench
      * 签约验证图片(三)
-     * Author：Lzxyz
      * @param $data
-     * @return array|bool|mixed|string
+     * @return array
+     * @throws \Exception
      */
     public function signValidate($data)
     {
@@ -182,10 +201,11 @@ class WrJs
     }
 
     /**
+     * Author:LazyBench
      * 签约完成(四)
-     * Author：Lzxyz
      * @param $data
-     * @return array|bool|mixed|string
+     * @return array
+     * @throws \Exception
      */
     public function signSuccess($data)
     {
@@ -197,8 +217,11 @@ class WrJs
     }
 
     /**
+     * Author:LazyBench
      * 签约查询
-     * Author：Lzxyz
+     * @param $signId
+     * @return array
+     * @throws \Exception
      */
     public function signQuery($signId)
     {
@@ -208,32 +231,38 @@ class WrJs
     }
 
     /**
+     * Author:LazyBench
      * 签约回调通知验证
-     * Author：Lzxyz
+     * @param $data
+     * @return bool
      */
     public function signCallbackVerify($data)
     {
         return true;
     }
 
-    public function http($url, $data, $method = 'GET')
+    /**
+     * Author:LazyBench
+     *
+     * @param $url
+     * @param $data
+     * @param string $method
+     * @return array
+     * @throws \Exception
+     */
+    public function http($url, $data, $method = 'GET'): array
     {
         $http = new Client($this->host, $this->appId, $this->appKey);
-        $res = $http->request($url, $data, $method);
-        if ($res) {
-            $res = json_decode($res, true);
-            if ($res) {
-                return $res;
-            } else {
-                return [
-                    'status' => 99,
-                    'msg' => 'JSON解析错误',
-                ];
-            }
+        if (!$res = $http->request($url, $data, $method)) {
+            return [
+                'status' => 99,
+                'msg' => 'Api暂无响应',
+            ];
         }
-        return [
-            'status' => 99,
-            'msg' => 'Api暂无响应',
-        ];
+        $res = json_decode($res, true);
+        if (json_last_error()) {
+            throw new \Exception(json_last_error(), json_last_error_msg());
+        }
+        return $res;
     }
 }
