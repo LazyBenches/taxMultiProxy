@@ -191,12 +191,13 @@ class Client
     }
 
     /**
-     * Send
+     * Author:LazyBench
      *
-     * @param string $method
-     * @param string $url
+     * @param $method
+     * @param $url
      * @param array $params
-     * @return array
+     * @return mixed
+     * @throws \Exception
      */
     public function sendRequest($method, $url, $params = [])
     {
@@ -206,22 +207,22 @@ class Client
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
         curl_setopt($curl, CURLOPT_HEADER, 0);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $this->headers);
-
-        if ($method == 'POST') {
+        if ($method === 'POST') {
             curl_setopt($curl, CURLOPT_POST, 1);
             curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
         }
-
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         $res = curl_exec($curl);
         $errorNo = curl_errno($curl);
-        if ($errorNo) {
-            $errMsg = curl_error($curl);
-            curl_close($curl);
-            return compact('errorNo', 'errMsg');
-        }
+        $errMsg = curl_error($curl);
         curl_close($curl);
-        return json_decode($res, true);
+        if ($errorNo) {
+            throw new \Exception($errMsg, $errorNo);
+        }
+        if (!$arr = json_decode($res, true)) {
+            throw new \Exception(json_last_error_msg(), json_last_error());
+        }
+        return $arr;
     }
 
     /**
