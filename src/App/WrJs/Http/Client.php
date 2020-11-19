@@ -25,10 +25,10 @@ class Client
      * @param $url
      * @param array $params
      * @param string $method
-     * @return string
+     * @return array
      * @throws \Exception
      */
-    public function request($url, $params = [], $method = 'GET'): string
+    public function request($url, $params = [], $method = 'GET'): array
     {
         $header = array(
             'Version: YJ 1.0',

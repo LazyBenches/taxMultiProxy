@@ -53,14 +53,14 @@ class Tool
             curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
         }
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        $res = curl_exec($curl);
+        $content = curl_exec($curl);
         $errorNo = curl_errno($curl);
         $errMsg = curl_error($curl);
         curl_close($curl);
         if ($errorNo) {
             throw new \Exception($errMsg, $errorNo);
         }
-        if (!$arr = json_decode($res, true)) {
+        if (!$arr = json_decode($content, true)) {
             throw new \Exception(json_last_error_msg(), json_last_error());
         }
         return $arr;

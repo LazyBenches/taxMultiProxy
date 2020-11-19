@@ -259,10 +259,6 @@ class WrJs
                 'msg' => 'Api暂无响应',
             ];
         }
-        $res = json_decode($res, true);
-        if (json_last_error()) {
-            throw new \Exception(json_last_error(), json_last_error_msg());
-        }
         return $res;
     }
 }
