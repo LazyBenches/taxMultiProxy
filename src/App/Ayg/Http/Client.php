@@ -8,65 +8,66 @@ class Client
     private $appId;
     private $privateKey;
     private $publicKey;
-    private $baseUrl;
+    private $host;
     private $headers = array('Content-Type: application/json');
 
     /**
      * Client constructor.
      * @param $appId
      * @param $privateKey
-     * @param $baseUrl
+     * @param $host
      * @param $publicKey
      */
-    public function __construct($appId, $privateKey, $baseUrl, $publicKey)
+    public function __construct($appId, $privateKey, $host, $publicKey)
     {
         $this->appId = $appId;
         $this->privateKey = $privateKey;
-        $this->baseUrl = $baseUrl;
+        $this->host = $host;
         $this->publicKey = $publicKey;
     }
 
     /**
-     * url拼接
+     * Author:LazyBench
      *
-     * @param string $path
-     * @return String
+     * @param $path
+     * @return string
      */
-    public function buildUrl($path)
+    public function buildUrl($path): string
     {
-        return $this->baseUrl.ltrim($path, '/');
+        return $this->host.ltrim($path, '/');
     }
 
-    public function setHeaders($headers)
+    public function setHeaders($headers): void
     {
         $this->headers = $headers;
     }
 
     /**
-     * GET
+     * Author:LazyBench
      *
-     * @param string $path
-     * @param array $params
-     * @return void
+     * @param $path
+     * @param $params
+     * @return mixed
+     * @throws \Exception
      */
     public function get($path, $params)
     {
         if (is_array($params)) {
-            $params = $this->buildQueryString($params);
+            $params = '?'.$this->buildQueryString($params);
         }
-        $url = $this->buildUrl($path).'?'.$params;
+        $url = $this->buildUrl($path).$params;
         return $this->sendRequest('GET', $url);
     }
 
 
     /**
-     * 签名参数组装
+     * Author:LazyBench
      *
-     * @param array $params 参数
-     * @param boolean $isSubset 是否子集
-     * @return void
+     * @param array $params
+     * @param false $isSubset
+     * @return string
      */
-    public function buildQueryString($params, $isSubset = false)
+    public function buildQueryString(array $params, $isSubset = false): string
     {
         $data = [];
         ksort($params, SORT_NATURAL);
@@ -83,30 +84,27 @@ class Client
             if ($value === null) {
                 continue;
             }
-
             if (is_array($value)) {
                 $value = $this->buildQueryString($value, true);
             }
             $data[$key] = urldecode($value);
         }
         if ($isSubset) {
-            //子集按数组和键值对不同形式组装
             if ($isAssocArray) {
                 return '['.implode(',', $data).']';
-            } else {
-                return '{'.http_build_query($data).'}';
             }
-        } else {
-            return http_build_query($data);
+            return '{'.http_build_query($data).'}';
         }
+        return http_build_query($data);
     }
 
     /**
-     * POST
+     * Author:LazyBench
      *
-     * @param string $path
-     * @param array $data
-     * @return JSON
+     * @param $path
+     * @param $data
+     * @return mixed
+     * @throws \Exception
      */
     public function post($path, $data)
     {
@@ -122,11 +120,20 @@ class Client
         return $this->sendRequest('POST', $url, $params);
     }
 
-    public function getRandom($length = 4, $chars = 'abcdefghijkmnpqrstuvwxyz1234567890'): string
+    /**
+     * Author:LazyBench
+     *
+     * @param int $length
+     * @return string
+     * @throws \Exception
+     */
+    public function getRandom($length = 4): string
     {
         $str = '';
+        $chars = 'qQwWeErRtTyYuUiIoOpPaAsSfFgGhHjJkKlLzZxXcCvVbBnNmM0123456789';
+        $len = strlen($chars) - 1;
         for ($i = 0; $i < $length; $i++) {
-            $str .= substr($chars, mt_rand(0, strlen($chars) - 1), 1);
+            $str .= $chars[random_int(0, $len)];
         }
         return $str;
     }
@@ -137,7 +144,8 @@ class Client
      * @param $path
      * @param $data
      * @param $method
-     * @return array
+     * @return mixed
+     * @throws \Exception
      */
     public function postPay($path, $data, $method)
     {
@@ -158,12 +166,13 @@ class Client
     }
 
     /**
-     * POST File
+     * Author:LazyBench
      *
-     * @param string $path
-     * @param array $queryParams
-     * @param array $formData
-     * @return JSON
+     * @param $path
+     * @param $queryParams
+     * @param $formData
+     * @return mixed
+     * @throws \Exception
      */
     public function multipartPost($path, $queryParams, $formData)
     {
@@ -176,17 +185,18 @@ class Client
                 }
             }
         }
-
         if (is_array($queryParams)) {
             $queryParams['appId'] = $this->appId;
-            $queryParams['nonce'] = get_random_string(32);
+            $queryParams['nonce'] = $this->getRandom(32);
             $queryParams['timestamp'] = time();
             $signData = array_merge($signData, $queryParams);
             $queryParams['sign'] = $this->rsaSign($signData);
-            $queryParams = http_build_query($queryParams);
+            $queryString = '?'.http_build_query($queryParams);
+        } else {
+            $queryString = $queryParams ? "?{$queryParams}" : '';
         }
 
-        $url = $this->buildUrl($path).'?'.$queryParams;
+        $url = $this->buildUrl($path).$queryString;
         return $this->sendRequest('POST', $url, $formData);
     }
 
