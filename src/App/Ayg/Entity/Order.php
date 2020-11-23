@@ -7,6 +7,7 @@ use LazyBench\TaxMultiProxy\App\Ayg\Traits\RequestTrait;
 class Order
 {
     use RequestTrait;
+
     public $templateId;
     public $templateGroupId;
     public $extraSystemId;
@@ -27,9 +28,9 @@ class Order
     /**
      * 7.3 批量提交请求签约合同-异步
      *
-     * @return JSON
+     * @return array
      */
-    public function batchSubmit()
+    public function batchSubmit(): array
     {
         $path = '/econtract/extr/order/batchsubmit';
         $data = [
@@ -37,7 +38,10 @@ class Order
             'notifyUrl' => $this->notifyUrl,
             'list' => $this->list,
         ];
-        return $this->client->post($path, $data);
+        return [
+            'path' => $path,
+            'data' => $data,
+        ];
 
     }
 
@@ -71,23 +75,26 @@ class Order
     /**
      * 7.4 查询合同订单信息
      *
-     * @return JSON
+     * @return array
      */
-    public function queryOrder()
+    public function queryOrder(): array
     {
         $path = '/econtract/extr/order/qry';
         $data = [
             'orderId' => $this->orderId,
             'extrOrderId' => $this->extraOrderId,
         ];
-        return $this->client->post($path, $data);
+        return [
+            'path' => $path,
+            'data' => $data,
+        ];
     }
 
 
     /**
      * 7.5 实时查询签约状态信息
      *
-     * @return JSON
+     * @return array
      */
     public function realtimeQueryOrder()
     {
@@ -96,15 +103,18 @@ class Order
             'orderId' => $this->orderId,
             'extrOrderId' => $this->extraOrderId,
         ];
-        return $this->client->post($path, $data);
+        return [
+            'path' => $path,
+            'data' => $data,
+        ];
     }
 
     /**
      * 7.6 单笔提交请求签约合同
      *
-     * @return JSON
+     * @return array
      */
-    public function submit()
+    public function submit(): array
     {
         $path = '/econtract/extr/order/submit';
         $data = [
@@ -116,7 +126,10 @@ class Order
             'identityType' => $this->identityType,
             'personalMobile' => $this->personalMobile,
         ];
-        return $this->client->post($path, $data);
+        return [
+            'path' => $path,
+            'data' => $data,
+        ];
     }
 
 
@@ -137,16 +150,15 @@ class Order
             'path' => $path,
             'data' => $data,
         ];
-        //        return $this->client->post($path, $data);
     }
 
 
     /**
      * 7.8 取消签约流程
      *
-     * @return JSON
+     * @return array
      */
-    public function cancelSign()
+    public function cancelSign(): array
     {
         $path = '/econtract/extr/order/cancelsign';
         $data = [
@@ -154,7 +166,10 @@ class Order
             'orderId' => $this->orderId,
             'extrOrderId' => $this->extraOrderId,
         ];
-        return $this->client->post($path, $data);
+        return [
+            'path' => $path,
+            'data' => $data,
+        ];
     }
 
 
@@ -162,12 +177,15 @@ class Order
      * Author:LazyBench
      * 7.11 外部电子签约订单同步接口【同步】
      * @param $data
-     * @return JSON
+     * @return array
      */
-    public function outerSync($data)
+    public function outerSync($data): array
     {
         $path = '/econtract/extr/order/outer-sync';
-        return $this->client->post($path, $data);
+        return [
+            'path' => $path,
+            'data' => $data,
+        ];
     }
 
     /**
@@ -175,7 +193,7 @@ class Order
      * 查询合同组订单信息
      * @return array
      */
-    public function queryOrderGroup()
+    public function queryOrderGroup(): array
     {
         $path = '/econtract/extr/order/templategroup-qry';
         $data = [
@@ -188,7 +206,6 @@ class Order
             'path' => $path,
             'data' => $data,
         ];
-        //        return $this->client->post($path, $data);
     }
 
     /**
@@ -196,7 +213,7 @@ class Order
      *
      * @return array
      */
-    public function queryUserSign()
+    public function queryUserSign(): array
     {
         $path = '/econtract/extr/usersign/qry';
         $data = [
@@ -208,7 +225,6 @@ class Order
             'path' => $path,
             'data' => $data,
         ];
-        //        return $this->client->post($path, $data);
     }
 
 }
