@@ -119,7 +119,7 @@ class Client
         $params['sign'] = $this->rsaSign($params);
         $params = json_encode($params);
         $url = $this->buildUrl($path);
-        return Tool::sendRequest('POST', $url, $this->headers, $params);
+        return Tool::sendRequest('POST', $this->headers, $url, $params);
     }
 
 
